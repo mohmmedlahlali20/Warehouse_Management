@@ -15,7 +15,7 @@ export const logoutAction = createAsyncThunk(
     async () => {
       const token = await AsyncStorage.removeItem("warehouseman");
       console.log('====================================');
-      console.log(token);
+      console.log();
       console.log('====================================');
     }
   );
@@ -65,7 +65,7 @@ const warehousemansSlice = createSlice({
             })
             .addCase(loginAction.fulfilled, (state, action) => {
                 state.warehouseman = action.payload;
-                AsyncStorage.setItem("warehouseman", action.payload)
+                AsyncStorage.setItem("warehouseman", action.payload)                
                 state.isLoading = false;
                 state.isAuthenticated = true;
             })
