@@ -21,11 +21,10 @@ export default function Product() {
     fetchProducts()
   }, [dispatch])
 
-  const handleProductPress = (id) => {
-    console.log("productId:", id)
-    // Uncomment the next line when you're ready to implement navigation
-    // router.push(`/product/${productId}`)
-  }
+  const handleProductPress = (productId: string) => {
+    console.log("productId:", productId)
+    router.push({ pathname: "/product/productDetails", params: { id: productId } });
+}
 
 
   return (
