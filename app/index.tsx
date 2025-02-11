@@ -25,10 +25,8 @@ export default function Home() {
     <ScrollView className="flex-1 bg-gray-100">
       <Stack.Screen
         options={{
-          title: "Warehouse Dashboard",
-          headerStyle: { backgroundColor: "#3B82F6" },
-          headerTintColor: "#fff",
-          headerTitleStyle: { fontWeight: "bold" },
+        
+          headerShown: false,
         }}
       />
       <Container className="px-4 py-6">
