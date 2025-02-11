@@ -23,7 +23,7 @@ export default function Login() {
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} className="flex-1 bg-gray-100">
-            <Stack.Screen options={{ title: 'Login' }} />
+            <Stack.Screen options={{ headerShown: false }} />
 
             <View className="flex-1 justify-center px-6">
                 <Text className="text-3xl font-bold text-gray-800 mb-2 text-center">Welcome Back!</Text>
