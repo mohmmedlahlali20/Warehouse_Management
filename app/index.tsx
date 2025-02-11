@@ -46,9 +46,9 @@ export default function Home() {
         </View>
 
 
-        <View className=" rounded-2xl p-6 mb-8 shadow-md m-5">
+        <View >
           <Text className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</Text>
-          <View className="flex-row justify-between gap-4 ">
+          <View className="flex-row justify-between gap-4 m-3 ">
             <TouchableOpacity
               onPress={() => router.push("/product/product")}
               className="bg-blue-500 px-6 py-3 rounded-xl flex-row items-center shadow-md"
