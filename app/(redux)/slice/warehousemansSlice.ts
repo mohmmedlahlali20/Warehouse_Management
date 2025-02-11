@@ -1,8 +1,31 @@
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Constants from "expo-constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { login } from "../(services)/api/warehouseman";
+
+export const loginAction = createAsyncThunk(
+    "auth/login",
+    async (secretKey: string) => {
+        const warehouseman = await login(secretKey);
+        return warehouseman;
+    }
+);
+export const logoutAction = createAsyncThunk(
+    "auth/logout",
+    async () => {
+        AsyncStorage.removeItem("warehouseman");
+    }
+);
+
+export const loadUser = createAsyncThunk(
+    "auth/loadUser",
+    async () => {
+        const warehouseman = await AsyncStorage.getItem("warehouseman");
 
 
-const API_URL = Constants.expoConfig?.extra?.URL_JSON_SERVER
+        return warehouseman ? JSON.parse(warehouseman) : null;
+    }
+)
 export interface Warehouseman {
     id: number;
     name: string;
@@ -12,122 +35,69 @@ export interface Warehouseman {
     warehouseId: string;
 }
 
-const initialState: { warehousemans: Warehouseman[]; loading: boolean; error: string | null } = {
-    warehousemans: [],
-    loading: false,
-    error: null
+
+
+const initialState: {
+    warehouseman: Warehouseman | null;
+    isLoading: boolean;
+    isAuthenticated: boolean;
+    error: string | null;
+    loading: boolean;
+} = {
+    warehouseman: null,
+    isLoading: true,
+    isAuthenticated: false,
+    error: null,
+    loading: true,
 };
 
-export const login = createAsyncThunk(
-    "warehousemans/login",
-    async ({ name, secretKey }: { name: string; secretKey: string }, { rejectWithValue }) => {
-        try {
-            const response = await fetch(`${API_URL}/warehousemans`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ name, secretKey })
-            });
-
-            if (!response.ok) {
-                throw new Error("Échec de la connexion");
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-export const register = createAsyncThunk(
-    "warehousemans/register",
-    async ({ name, secretKey, birthday,city }: { name: string; secretKey: string; birthday: string, city:string }, { rejectWithValue }) => {
-        try {
-            const response = await fetch(`${API_URL}/warehousemans`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ name, secretKey, birthday, city })
-            });
-
-            if (!response.ok) {
-                throw new Error("Échec de l'inscription");
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-
-export const checkUserIfExist = createAsyncThunk(
-    "warehousemans/checkUserIfExist",
-    async (secretKey: string, { rejectWithValue }) => {
-      try {
-        const response = await fetch(`${API_URL}/warehousemans?secretKey=${secretKey}`);
-        const data = await response.json();
-        return { exists: data.length > 0 };
-      } catch (error: any) {
-        return rejectWithValue(error.message);
-      }
-    }
-  );
-
-
 const warehousemansSlice = createSlice({
-    name: "warehousemans",
+    name: "auth",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+            .addCase(loginAction.pending, (state) => {
+                state.isLoading = true;
             })
-            .addCase(login.fulfilled, (state, action) => {
-                state.loading = false;
-                state.warehousemans = [action.payload]; 
+            .addCase(loginAction.fulfilled, (state, action) => {
+                state.warehouseman = action.payload;
+                AsyncStorage.setItem("warehouseman", action.payload)
+                state.isLoading = false;
+                state.isAuthenticated = true;
             })
-            .addCase(login.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
+            .addCase(loginAction.rejected, (state) => {
+                state.isLoading = false;
+                state.error = "Invalid secret key";
             })
-            .addCase(register.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+            .addCase(logoutAction.pending, (state) => {
+                state.isLoading = true;
             })
-            .addCase(register.fulfilled, (state, action) => {
-                state.loading = false;
-                state.warehousemans.push(action.payload);
+            .addCase(logoutAction.fulfilled, (state) => {
+                state.warehouseman = null;
+                AsyncStorage.removeItem("warehouseman");
+                state.isLoading = false;
+                state.isAuthenticated = false;
             })
-            .addCase(register.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
+            .addCase(loadUser.pending, (state) => {
+                state.isLoading = true;
             })
-            .addCase(checkUserIfExist.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(checkUserIfExist.fulfilled, (state, action) => {
-                state.loading = false;
-                if (action.payload.exists) {
-                    console.log("Utilisateur trouvé");
+            .addCase(loadUser.fulfilled, (state, action) => {
+                if (action.payload != null) {
+                    state.warehouseman = action.payload;
+                    state.isAuthenticated = true;
+                    state.isLoading = false;
+
                 } else {
-                    console.log("Aucun utilisateur avec ce secretKey");
+                    state.warehouseman = null;
+                    state.isLoading = false;
                 }
             })
-            .addCase(checkUserIfExist.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            });
-    }
+            .addCase(loadUser.rejected, (state) => {
+                state.isLoading = false;
+            })
+    },
 });
 
-export default warehousemansSlice.reducer;
+
+export default warehousemansSlice.reducer;  
