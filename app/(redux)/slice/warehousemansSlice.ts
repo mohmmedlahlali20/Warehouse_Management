@@ -2,24 +2,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { login } from "../(services)/api/warehouseman";
+import { Warehouseman } from "~/constant/types";
 
 export const loginAction = createAsyncThunk(
     "auth/login",
-    async (secretKey: string) => {
-        const warehouseman = await login(secretKey);
-        return warehouseman;
+    async (secretKey: string, { rejectWithValue }) => {
+        try {
+            const warehouseman = await login(secretKey);
+            return warehouseman;
+        } catch (err) {
+            return rejectWithValue("Failed to login");
+
+        }
     }
 );
 export const logoutAction = createAsyncThunk(
     "auth/logout",
     async () => {
-      const token = await AsyncStorage.removeItem("warehouseman");
-      console.log('====================================');
-      console.log();
-      console.log('====================================');
+        const token = await AsyncStorage.removeItem("warehouseman");
+        console.log('====================================');
+        console.log();
+        console.log('====================================');
     }
-  );
-  
+);
+
 
 export const loadUser = createAsyncThunk(
     "auth/loadUser",
@@ -29,14 +35,7 @@ export const loadUser = createAsyncThunk(
         return warehouseman ? JSON.parse(warehouseman) : null;
     }
 )
-export interface Warehouseman {
-    id: number;
-    name: string;
-    dob: string;
-    city: string;
-    secretKey: string;
-    warehouseId: string;
-}
+
 
 
 
@@ -45,13 +44,11 @@ const initialState: {
     isLoading: boolean;
     isAuthenticated: boolean;
     error: string | null;
-    loading: boolean;
 } = {
     warehouseman: null,
     isLoading: true,
     isAuthenticated: false,
     error: null,
-    loading: true,
 };
 
 const warehousemansSlice = createSlice({
@@ -65,7 +62,7 @@ const warehousemansSlice = createSlice({
             })
             .addCase(loginAction.fulfilled, (state, action) => {
                 state.warehouseman = action.payload;
-                AsyncStorage.setItem("warehouseman", action.payload)                
+                AsyncStorage.setItem("warehouseman", action.payload)
                 state.isLoading = false;
                 state.isAuthenticated = true;
             })
