@@ -13,15 +13,18 @@ export const loginAction = createAsyncThunk(
 export const logoutAction = createAsyncThunk(
     "auth/logout",
     async () => {
-        AsyncStorage.removeItem("warehouseman");
+      const token = await AsyncStorage.removeItem("warehouseman");
+      console.log('====================================');
+      console.log(token);
+      console.log('====================================');
     }
-);
+  );
+  
 
 export const loadUser = createAsyncThunk(
     "auth/loadUser",
     async () => {
         const warehouseman = await AsyncStorage.getItem("warehouseman");
-
 
         return warehouseman ? JSON.parse(warehouseman) : null;
     }
