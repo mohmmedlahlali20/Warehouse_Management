@@ -46,7 +46,7 @@ export default function Product() {
           <View className="flex-1 justify-center items-center">
             <Text className="text-red-500 text-lg">{error}</Text>
           </View>
-        ) : products?.length > 0 ? (
+        ) :  (
           products.map((product) => (
             <Pressable
               key={product.id}
@@ -64,11 +64,7 @@ export default function Product() {
               </View>
             </Pressable>
           ))
-        ) : (
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-gray-500 text-lg">No products available</Text>
-          </View>
-        )}
+        ) }
       </ScrollView>
     </View>
   )
