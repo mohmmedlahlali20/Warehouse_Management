@@ -28,7 +28,7 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
     "products/details",
     async (productId: string, { rejectWithValue }) => {
-
+        console.log('slice',productId);
         
         try {
             return await getProductsById(productId);
