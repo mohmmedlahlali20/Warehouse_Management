@@ -1,18 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Products } from "~/constant/types";
-import { getAllProduct, getProductsById } from "../(services)/api/products";
+import { checkIfProductsExistByBarcode, getAllProduct, getProductsById } from "../(services)/api/products";
 
 const initialState: {
     products: Products[];
     selectedProduct: Products | null;
     isLoading: boolean;
     error: string | null;
+    productExists: boolean;
 } = {
     products: [],
     selectedProduct: null,
     isLoading: false,
     error: null,
+    productExists: false,
 };
+
 
 export const getProducts = createAsyncThunk(
     "products/getAll",
@@ -28,8 +31,8 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
     "products/details",
     async (productId: string, { rejectWithValue }) => {
-        console.log('slice',productId);
-        
+        console.log('slice', productId);
+
         try {
             return await getProductsById(productId);
         } catch (error) {
@@ -37,6 +40,19 @@ export const getProductById = createAsyncThunk(
         }
     }
 );
+
+export const checkIfProductsExist = createAsyncThunk(
+    "products/checkIfProductsExist",
+    async (barcode: number, { rejectWithValue }) => {
+        try {
+            const exists = await checkIfProductsExistByBarcode(barcode);
+            return { barcode, exists };
+        } catch (err) {
+            return rejectWithValue("Failed to check product existence");
+        }
+    }
+);
+
 
 const productSlice = createSlice({
     name: "products",
@@ -66,6 +82,18 @@ const productSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(getProductById.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(checkIfProductsExist.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(checkIfProductsExist.fulfilled, (state, action: PayloadAction<{ barcode: number; exists: boolean }>) => {
+                state.isLoading = false;
+                state.productExists = action.payload.exists;
+            })
+            .addCase(checkIfProductsExist.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string;
             });
