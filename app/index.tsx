@@ -1,31 +1,42 @@
-import { Stack, useRouter } from "expo-router"
-import { View, Text, ScrollView, TouchableOpacity } from "react-native"
-import { Feather } from "@expo/vector-icons"
-import { Container } from "~/components/Container"
-import { useAppDispatch } from "~/hooks/useAppDispatch"
-import { logoutAction } from "./(redux)/slice/warehousemansSlice"
+import { Stack, useRouter } from "expo-router";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { Container } from "~/components/Container";
+import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch";
+import { logoutAction } from "./(redux)/slice/warehousemansSlice";
+import { useEffect } from "react";
+import { Statistique } from "./(redux)/slice/statistiqueSlice";
 
 export default function Home() {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isLoading, error, statistique } = useAppSelector((state) => state.statistique);
+
+  useEffect(() => {
+    const fetchStatistique = async () => {
+      await dispatch(Statistique());
+    };
+
+    fetchStatistique();
+  }, [dispatch]);
 
   const handleLogout = async () => {
-    await dispatch(logoutAction())
-    router.push("/(auth)/login")
-  }
+    await dispatch(logoutAction());
+    router.push("/(auth)/login");
+  };
 
   const warehouseData = [
-    { icon: "box", title: "Total Items", value: "1,234" },
-    { icon: "truck", title: "Shipments", value: "56" },
-    { icon: "alert-circle", title: "Low Stock", value: "23" },
-    { icon: "trending-up", title: "Top Selling", value: "78" },
-  ]
+    { icon: "box", title: "Total Items", value: statistique.totalProducts.toString() || 0 },
+    { icon: "truck", title: "most Added Products", value: statistique.mostAddedProducts.toString() || 0 }, 
+    { icon: "alert-circle", title: "Low Stock", value: statistique.outOfStock.toString() || 0 },
+    { icon: "trending-up", title: "most Removed Products", value: statistique.mostRemovedProducts.toString() || 0 }, 
+    { icon: "star", title: "total Stock Value", value: statistique.totalStockValue.toString() || 0 }, 
+  ];
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <Stack.Screen
         options={{
-        
           headerShown: false,
         }}
       />
@@ -45,8 +56,7 @@ export default function Home() {
           ))}
         </View>
 
-
-        <View >
+        <View>
           <Text className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</Text>
           <View className="flex-row justify-between gap-4 m-3 ">
             <TouchableOpacity
@@ -66,7 +76,6 @@ export default function Home() {
           </View>
         </View>
 
-
         <TouchableOpacity
           onPress={handleLogout}
           className="bg-red-500 px-6 py-3 rounded-xl flex-row items-center justify-center"
@@ -76,6 +85,5 @@ export default function Home() {
         </TouchableOpacity>
       </Container>
     </ScrollView>
-  )
+  );
 }
-
