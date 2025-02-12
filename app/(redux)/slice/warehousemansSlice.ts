@@ -20,9 +20,6 @@ export const logoutAction = createAsyncThunk(
     "auth/logout",
     async () => {
         const token = await AsyncStorage.removeItem("warehouseman");
-        console.log('====================================');
-        console.log();
-        console.log('====================================');
     }
 );
 
