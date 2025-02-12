@@ -6,13 +6,11 @@ import { Stack, useRouter } from "expo-router"
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
 import { getProducts } from "../(redux)/slice/productsSlice"
 
-const fallbackImage = "https://via.placeholder.com/150"
 
 export default function Product() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { isLoading, error, products } = useAppSelector((state) => state.Products)
-  const [imageErrors, setImageErrors] = useState({})
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -23,7 +21,7 @@ export default function Product() {
 
   const handleProductPress = (productId: string) => {
     console.log("productId:", productId)
-    router.push({ pathname: "/product/productDetails", params: { id: productId } });
+    router.push(`/product/productDetails?productId=${productId}`);
 }
 
 
