@@ -18,13 +18,9 @@ const getAllProduct = async () => {
 
 
 const getProductsById = async (productId: string) => {
-    const res  = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`,{
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }
-      
-    })
+   
+    const res  = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`)
+
     if(!res.ok){
         throw new Error("Failed to fetch products");   
     }

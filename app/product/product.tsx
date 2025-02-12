@@ -6,13 +6,11 @@ import { Stack, useRouter } from "expo-router"
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
 import { getProducts } from "../(redux)/slice/productsSlice"
 
-const fallbackImage = "https://via.placeholder.com/150"
 
 export default function Product() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const { isLoading, error, products } = useAppSelector((state) => state.Products)
-  const [imageErrors, setImageErrors] = useState({})
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -23,7 +21,7 @@ export default function Product() {
 
   const handleProductPress = (productId: string) => {
     console.log("productId:", productId)
-    router.push({ pathname: "/product/productDetails", params: { id: productId } });
+    router.push(`/product/productDetails?productId=${productId}`);
 }
 
 
@@ -48,7 +46,7 @@ export default function Product() {
           <View className="flex-1 justify-center items-center">
             <Text className="text-red-500 text-lg">{error}</Text>
           </View>
-        ) : products?.length > 0 ? (
+        ) :  (
           products.map((product) => (
             <Pressable
               key={product.id}
@@ -66,11 +64,7 @@ export default function Product() {
               </View>
             </Pressable>
           ))
-        ) : (
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-gray-500 text-lg">No products available</Text>
-          </View>
-        )}
+        ) }
       </ScrollView>
     </View>
   )

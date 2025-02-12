@@ -1,19 +1,15 @@
 export interface Stocks {
     id: string;
     name: string;
-    quantity: string;
-    localisation: Localisation
-
+    quantity: number;    
+    localisation: Localisation;
 }
 
-
-export interface Localisation{
+export interface Localisation {
     city: string;
     latitude: number;
     longitude: number;
 }
-
-
 
 
 export interface Products {
@@ -25,7 +21,7 @@ export interface Products {
     solde: number;
     supplier: string;
     image: string;
-    stocks: Stocks
+    stocks: Stocks[];
 
 }
 
