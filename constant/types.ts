@@ -35,3 +35,13 @@ export interface Warehouseman {
     secretKey: string;
     warehouseId: string;
 }
+
+
+
+export interface Statistics {
+    totalProducts: number;
+    outOfStock: number;
+    totalStockValue: number;
+    mostAddedProducts: string[];
+    mostRemovedProducts: string[]
+}
