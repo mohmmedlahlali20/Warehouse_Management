@@ -1,10 +1,11 @@
 "use client"
 
-import { View, Text, StatusBar, Image, ActivityIndicator, ScrollView, Pressable } from "react-native"
+import { View, Text, StatusBar, Image, ActivityIndicator, ScrollView, Pressable, TouchableOpacity } from "react-native"
 import { useEffect, useState } from "react"
 import { Stack, useRouter } from "expo-router"
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
 import { getProducts } from "../(redux)/slice/productsSlice"
+import { Feather } from "@expo/vector-icons"
 
 
 export default function Product() {
@@ -22,7 +23,12 @@ export default function Product() {
   const handleProductPress = (productId: string) => {
     console.log("productId:", productId)
     router.push(`/product/productDetails?productId=${productId}`);
-}
+  }
+
+  const addProducts = () => {
+    router.push('/product/addProducts')
+
+  }
 
 
   return (
@@ -46,7 +52,7 @@ export default function Product() {
           <View className="flex-1 justify-center items-center">
             <Text className="text-red-500 text-lg">{error}</Text>
           </View>
-        ) :  (
+        ) : (
           products.map((product) => (
             <Pressable
               key={product.id}
@@ -64,8 +70,18 @@ export default function Product() {
               </View>
             </Pressable>
           ))
-        ) }
+        )}
       </ScrollView>
+
+      <View className="container mx-auto px-6 py-6">
+        <TouchableOpacity
+          onPress={addProducts}
+          className="bg-red-500 px-6 py-3 rounded-xl flex-row items-center justify-center"
+        >
+          <Text className="text-white font-semibold"> Add new Products</Text>
+          <Feather name="plus" size={20} color="#fff" style={{ marginRight: 8 }} />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
