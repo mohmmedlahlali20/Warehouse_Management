@@ -20,7 +20,7 @@ export default function ProductDetails() {
           type: "add",
           productId: selectedProduct.id,
           stokId: selectedProduct.stocks[0].id,
-          warehousemanId: 1234, 
+          warehousemanId: Math.floor(Math.random()), 
         })
       );
 
@@ -34,7 +34,7 @@ export default function ProductDetails() {
           type: "remove",
           productId: selectedProduct.id,
           stokId: selectedProduct.stocks[0].id,
-          warehousemanId: 1234,
+          warehousemanId: Math.floor(Math.random()),
         })
       );
     }
