@@ -58,7 +58,7 @@ const addProduct = async (ProductData: Products) => {
 const UpdateQuantity = async (
     type: string,
     productId: string | undefined,
-    stokId: string,
+    stockId: string,
     warehousemanId: number
 ) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`);
@@ -69,12 +69,12 @@ const UpdateQuantity = async (
         switch (type) {
             case 'add':
                 updatedStocks = product.stocks.map((stock: Stocks) =>
-                    stock.id === stokId ? { ...stock, quantity: stock.quantity + 1 } : stock
+                    stock.id === stockId ? { ...stock, quantity: stock.quantity + 1 } : stock
                 );
                 break;
             case 'remove':
                 updatedStocks = product.stocks.map((stock: Stocks) =>
-                    stock.id === stokId ? { ...stock, quantity: stock.quantity - 1 } : stock
+                    stock.id === stockId ? { ...stock, quantity: stock.quantity - 1 } : stock
                 );
                 break;
             default:
