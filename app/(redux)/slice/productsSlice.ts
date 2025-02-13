@@ -48,56 +48,9 @@ export const checkIfProductsExist = createAsyncThunk(
         }
     }
 );
-export const updateQuantityInStock = createAsyncThunk(
-    'products/updateQuantity',
-    async (
-        { type, productId, stokId, warehousemanId }: { type: string, productId: string, stokId: number | string, warehousemanId: number },
-        { rejectWithValue }
-    ) => {
-        try {
-            const response = await UpdateQuantity(type, productId, stokId, warehousemanId);
 
-            if (!response.ok) {
-                return rejectWithValue('Failed to fetch product');
-            }
-
-            const product = await response.json();
-
-            if (!product || !product.stocks) {
-                return rejectWithValue('Product or stocks not found');
-            }
-
-            const updatedStocks = product.stocks.map((stock: any) => {
-                if (stock.id === stokId) {
-                    const newQuantity = type === 'add' ? stock.quantity + 1 : stock.quantity - 1;
-                    return { ...stock, quantity: newQuantity };
-                }
-                return stock;
-            });
-
-            const updateResponse = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    stocks: updatedStocks,
-                    editedBy: [
-                        ...product.editedBy,
-                        { warehousemanId, at: new Date().toISOString().split('T')[0] },
-                    ],
-                }),
-            });
-
-            if (!updateResponse.ok) {
-                return rejectWithValue('Failed to update stock');
-            }
-
-            return await updateResponse.json();
-        } catch (error: any) {
-            return rejectWithValue(error.message || 'An error occurred');
-        }
-    }
-);
-export const createNewProduct = createAsyncThunk("create Products",
+export const createNewProduct = createAsyncThunk(
+    "create Products",
     async ({ ProductData }: { ProductData: Products }, { rejectWithValue }) => {
         try {
             return await addProduct(ProductData)
@@ -107,6 +60,21 @@ export const createNewProduct = createAsyncThunk("create Products",
 
     }
 )
+export const updateQuantityInStock = createAsyncThunk(
+    'products/updateQuantity',
+    async (
+        { type, productId, stokId, warehousemanId }: { type: string; productId: string; stokId: string | number; warehousemanId: number },
+        { rejectWithValue }
+    ) => {
+
+            const product = await UpdateQuantity(type, productId, stokId as string, warehousemanId);
+
+            console.log("Updating selectedProduct state:",product);
+
+            return product;
+       
+    }
+);
 
 
 
@@ -144,7 +112,7 @@ const productSlice = createSlice({
             .addCase(checkIfProductsExist.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
-            })
+            }) 
             .addCase(checkIfProductsExist.fulfilled, (state, action: PayloadAction<{ barcode: number; exists: boolean }>) => {
                 state.isLoading = false;
                 state.productExists = action.payload.exists;
@@ -154,21 +122,21 @@ const productSlice = createSlice({
                 state.error = action.payload as string;
             })
             .addCase(updateQuantityInStock.pending, (state) => {
-                state.isLoading = true;
+                console.log("🔄 Dispatch started: Updating stock...");
+                state.isLoading = false;
                 state.error = null;
             })
             .addCase(updateQuantityInStock.fulfilled, (state, action) => {
+                console.log("✅ Action fulfilled! Received product:", action.payload);
                 state.isLoading = false;
-                const updatedProduct = action.payload;
-                const updatedProductIndex = state.products.findIndex(product => product.id === updatedProduct.id);
-                if (updatedProductIndex !== -1) {
-                    state.products[updatedProductIndex] = updatedProduct;
-                }
+                state.selectedProduct = { ...action.payload };
             })
             .addCase(updateQuantityInStock.rejected, (state, action) => {
+                console.log("❌ Action rejected! Error:", action.payload);
                 state.isLoading = false;
-                state.error = action.payload as string || 'An error occurred while updating stock';
+                state.error = action.payload as string || "An error occurred";
             })
+            
             .addCase(createNewProduct.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -181,7 +149,7 @@ const productSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload as string || 'Failed to create product';
             });
-            
+
 
     },
 });
