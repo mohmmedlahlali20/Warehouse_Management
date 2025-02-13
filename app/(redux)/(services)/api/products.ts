@@ -1,3 +1,4 @@
+import { Products, Stocks } from "~/constant/types";
 
 
 const getAllProduct = async () => {
@@ -39,6 +40,29 @@ const checkIfProductsExistByBarcode = async (barcode: number) => {
 
     return product ? true : false;
 
+};
+
+
+export const addProduct = async (newProduct: Products) => {
+    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
+        method: 'POST',
+        body: JSON.stringify(newProduct),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.json();
+};
+
+export const updateProductStock = async (updatedStock: Stocks) => {
+    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/stocks/${updatedStock.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(updatedStock),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.json();
 };
 
 
