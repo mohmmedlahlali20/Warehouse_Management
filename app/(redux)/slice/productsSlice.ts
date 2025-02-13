@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Products } from "~/constant/types";
-import { checkIfProductsExistByBarcode, getAllProduct, getProductsById } from "../(services)/api/products";
+import { checkIfProductsExistByBarcode, getAllProduct, getProductsById, UpdateQuantity } from "../(services)/api/products";
 
 const initialState: {
     products: Products[];
@@ -53,6 +53,60 @@ export const checkIfProductsExist = createAsyncThunk(
     }
 );
 
+export const updateQuantityInStock = createAsyncThunk(
+    'products/updateQuantity',
+    async (
+        { type, productId, stokId, warehousemanId }: { type: string, productId: string, stokId: number | string, warehousemanId: number },
+        { rejectWithValue }
+    ) => {
+        try {
+            const response = await UpdateQuantity(type, productId, stokId, warehousemanId);
+
+            if (!response.ok) {
+                return rejectWithValue('Failed to fetch product');
+            }
+
+            const product = await response.json();
+
+            if (!product || !product.stocks) {
+                return rejectWithValue('Product or stocks not found');
+            }
+
+            const updatedStocks = product.stocks.map((stock: any) => {
+                if (stock.id === stokId) {
+                    const newQuantity = type === 'add' ? stock.quantity + 1 : stock.quantity - 1;
+                    return { ...stock, quantity: newQuantity };
+                }
+                return stock;
+            });
+
+            const updateResponse = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    stocks: updatedStocks,
+                    editedBy: [
+                        ...product.editedBy,
+                        { warehousemanId, at: new Date().toISOString().split('T')[0] },
+                    ],
+                }),
+            });
+
+            if (!updateResponse.ok) {
+                return rejectWithValue('Failed to update stock');
+            }
+
+            return await updateResponse.json();
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'An error occurred');
+        }
+    }
+);
+
+
+export const createNewProduct = createAsyncThunk()
+
+
 
 const productSlice = createSlice({
     name: "products",
@@ -96,7 +150,24 @@ const productSlice = createSlice({
             .addCase(checkIfProductsExist.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string;
+            })
+            .addCase(updateQuantityInStock.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(updateQuantityInStock.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const updatedProduct = action.payload;
+                const updatedProductIndex = state.products.findIndex(product => product.id === updatedProduct.id);
+                if (updatedProductIndex !== -1) {
+                    state.products[updatedProductIndex] = updatedProduct;
+                }
+            })
+            .addCase(updateQuantityInStock.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string || 'An error occurred while updating stock';
             });
+
     },
 });
 

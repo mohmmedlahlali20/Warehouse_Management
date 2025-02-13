@@ -42,8 +42,7 @@ const checkIfProductsExistByBarcode = async (barcode: number) => {
 
 };
 
-
-export const addProduct = async (newProduct: Products) => {
+ const addProduct = async (newProduct: Products) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
         method: 'POST',
         body: JSON.stringify(newProduct),
@@ -54,21 +53,52 @@ export const addProduct = async (newProduct: Products) => {
     return await response.json();
 };
 
-export const updateProductStock = async (updatedStock: Stocks) => {
-    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/stocks/${updatedStock.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(updatedStock),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+const UpdateQuantity = async (
+    type: string,
+    productId: string | undefined,
+    stokId: number | string,
+    warehousemanId: number
+  ) => {
+    if (!productId) {
+      throw new Error("Product ID is required");
+    }
+  
+    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`);
+    const product = await response.json();
+  
+    if (!product || !product.stocks) {
+      throw new Error("Product or stocks not found");
+    }
+  
+    const updatedStocks = product.stocks.map((stock: any) => {
+      if (stock.id === stokId) {
+        const newQuantity = type === 'add' ? stock.quantity + 1 : stock.quantity - 1;
+        return { ...stock, quantity: newQuantity };
+      }
+      return stock;
     });
-    return await response.json();
-};
+  
+    const updatedProduct = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        stocks: updatedStocks,
+        editedBy: [
+          ...product.editedBy,
+          { warehousemanId, at: new Date().toISOString().split("T")[0] }
+        ],
+      }),
+    });
+  
+    return updatedProduct.json();
+  };
+  
 
 
 
 export {
     getAllProduct,
     getProductsById,
-    checkIfProductsExistByBarcode
+    checkIfProductsExistByBarcode,
+    UpdateQuantity
 }
