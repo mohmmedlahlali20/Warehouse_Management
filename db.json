@@ -73,7 +73,7 @@
         }
       ],
       "editedBy": {
-        "warehousemanId": 1234,
+        "warehousemanId": 0,
         "at": "2025-02-13"
       }
     },
@@ -103,65 +103,13 @@
       }
     },
     {
-      "id": "1554",
-      "name": "PSP",
-      "type": "Informatique",
-      "barcode": "6111128000071",
-      "solde": "855",
-      "price": "4258",
-      "supplier": 1999,
-      "image": "https://mediazone.ma/uploads/images/products/15216/15216-00QityxR.webp",
-      "stocks": [
-        {
-          "id": "1999",
-          "name": "Gueliz B2",
-          "quantity": 22,
-          "localisation": {
-            "city": "Marrakesh",
-            "latitude": 31.628685,
-            "longitude": -7.99211
-          }
-        }
-      ],
-      "editedBy": {
-        "warehousemanId": 0,
-        "at": "2025-02-13"
-      }
-    },
-    {
-      "id": "1236",
+      "id": "hcDGZYQzg6Ky_Ovp7Ideh",
       "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
       "solde": 798,
       "price": 799,
       "stocks": [
         {
-          "id": "1739451320476",
-          "name": "503",
-          "quantity": 4,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "578",
-      "barcode": "00989656555",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
-      "editedBy": {
-        "warehousemanId": 0,
-        "at": "2025-02-13"
-      }
-    },
-    {
-      "id": "uD0JSHru8zOHuOcY_RgrZ",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739451665005",
+          "id": "1739482914097",
           "name": "503",
           "quantity": 0,
           "localisation": {
@@ -172,35 +120,9 @@
         }
       ],
       "type": "accessoir",
-      "supplier": "Uui",
-      "barcode": "42355182",
+      "supplier": "98889",
+      "barcode": "366669988888",
       "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
-    },
-    {
-      "id": "y0R8nikC000P8sek09AZ-",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739451732897",
-          "name": "503",
-          "quantity": 13,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "Fg",
-      "barcode": "369666556585",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
-      "editedBy": {
-        "warehousemanId": 0,
-        "at": "2025-02-13"
-      }
     }
   ],
   "warehousemans": [
