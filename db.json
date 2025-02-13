@@ -50,7 +50,7 @@
         {
           "id": 1999,
           "name": "Gueliz B2",
-          "quantity": 20,
+          "quantity": 21,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628674,
@@ -72,6 +72,10 @@
         {
           "warehousemanId": 1444,
           "at": "2025-02-02"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
         }
       ]
     },
@@ -83,19 +87,38 @@
       "price": 11000,
       "supplier": "HP",
       "image": "https://technoplace.ma/11482-large_default/hp-omen-17-i7-7700hq-173-16gb-2tb-geforce-gtx-10.jpg",
-      "stocks": [],
+      "stocks": [
+        {
+          "id": "1999",
+          "name": "Gueliz B2",
+          "quantity": 8,
+          "localisation": {
+            "city": "Marrakesh",
+            "latitude": 31.628685,
+            "longitude": -7.99211
+          }
+        }
+      ],
       "editedBy": [
         {
           "warehousemanId": 1444,
           "at": "2025-02-02"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
         }
       ]
     },
     {
       "id": "1554",
-      "name": "moon night",
-      "type": "moon",
-      "barcode": "125896333",
+      "name": "PSP",
+      "type": "Informatique",
+      "barcode": "6111128000071",
       "solde": "855",
       "price": "4258",
       "supplier": 1999,
@@ -104,11 +127,11 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 6,
+          "quantity": 8,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
-            "longitude": -7.992110
+            "longitude": -7.99211
           }
         }
       ],
@@ -116,6 +139,14 @@
         {
           "warehousemanId": 1333,
           "at": "2025-02-02"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
         }
       ]
     }
