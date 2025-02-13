@@ -13,7 +13,7 @@
         {
           "id": 1999,
           "name": "Gueliz B2",
-          "quantity": 21,
+          "quantity": 22,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628674,
@@ -35,6 +35,10 @@
         {
           "warehousemanId": 1333,
           "at": "2025-02-02"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
         }
       ]
     },
@@ -68,16 +72,10 @@
           }
         }
       ],
-      "editedBy": [
-        {
-          "warehousemanId": 1444,
-          "at": "2025-02-02"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        }
-      ]
+      "editedBy": {
+        "warehousemanId": 1234,
+        "at": "2025-02-13"
+      }
     },
     {
       "id": "3",
@@ -91,7 +89,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 7,
+          "quantity": 13,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -99,24 +97,10 @@
           }
         }
       ],
-      "editedBy": [
-        {
-          "warehousemanId": 1444,
-          "at": "2025-02-02"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        }
-      ]
+      "editedBy": {
+        "warehousemanId": 1234,
+        "at": "2025-02-13"
+      }
     },
     {
       "id": "1554",
@@ -131,7 +115,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 8,
+          "quantity": 20,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -139,20 +123,10 @@
           }
         }
       ],
-      "editedBy": [
-        {
-          "warehousemanId": 1333,
-          "at": "2025-02-02"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        }
-      ]
+      "editedBy": {
+        "warehousemanId": 1234,
+        "at": "2025-02-13"
+      }
     },
     {
       "id": "1236",
@@ -163,7 +137,7 @@
         {
           "id": "1739451320476",
           "name": "503",
-          "quantity": 0,
+          "quantity": 1,
           "localisation": {
             "city": "Ouejda",
             "latitude": 0,
@@ -174,7 +148,11 @@
       "type": "accessoir",
       "supplier": "578",
       "barcode": "00989656555",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
+      "editedBy": {
+        "warehousemanId": 1234,
+        "at": "2025-02-13"
+      }
     },
     {
       "id": "uD0JSHru8zOHuOcY_RgrZ",
