@@ -19,7 +19,9 @@ const getAllProduct = async () => {
 
 
 const getProductsById = async (productId: string) => {
-
+console.log('=======sdfghjklui=============================');
+console.log(productId);
+console.log('====================================');
     const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`)
 
     if (!res.ok) {
@@ -42,7 +44,7 @@ const checkIfProductsExistByBarcode = async (barcode: number) => {
 
 };
 
- const addProduct = async (ProductData: Products) => {
+const addProduct = async (ProductData: Products) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
         method: 'POST',
         body: JSON.stringify(ProductData),
@@ -56,43 +58,56 @@ const checkIfProductsExistByBarcode = async (barcode: number) => {
 const UpdateQuantity = async (
     type: string,
     productId: string | undefined,
-    stokId: number | string,
+    stokId: string,
     warehousemanId: number
-  ) => {
-    if (!productId) {
-      throw new Error("Product ID is required");
-    }
-  
+) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`);
     const product = await response.json();
-  
-    if (!product || !product.stocks) {
-      throw new Error("Product or stocks not found");
+    let updatedStocks = [];
+
+    if (product) {
+        switch (type) {
+            case 'add':
+                updatedStocks = product.stocks.map((stock: Stocks) =>
+                    stock.id === stokId ? { ...stock, quantity: stock.quantity + 1 } : stock
+                );
+                break;
+            case 'remove':
+                updatedStocks = product.stocks.map((stock: Stocks) =>
+                    stock.id === stokId ? { ...stock, quantity: stock.quantity - 1 } : stock
+                );
+                break;
+            default:
+                break;
+        }
     }
-  
-    const updatedStocks = product.stocks.map((stock: any) => {
-      if (stock.id === stokId) {
-        const newQuantity = type === 'add' ? stock.quantity + 1 : stock.quantity - 1;
-        return { ...stock, quantity: newQuantity };
+       
+
+    const updateResponse = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stocks: updatedStocks,
+          editedBy: {
+            warehousemanId: warehousemanId,
+            at: new Date().toISOString().split("T")[0],
+          },
+        }),
+      });
+      
+      console.log(" status:", updateResponse.status);
+      
+      if (!updateResponse.ok) {
+        console.error('Failed to update product, status code:', updateResponse.status);
+        const errorText = await updateResponse.text();
+        console.error("Error details:", errorText);
+        throw new Error("Failed to update product");
       }
-      return stock;
-    });
-  
-    const updatedProduct = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        stocks: updatedStocks,
-        editedBy: [
-          ...product.editedBy,
-          { warehousemanId, at: new Date().toISOString().split("T")[0] }
-        ],
-      }),
-    });
-  
-    return updatedProduct.json();
-  };
-  
+      
+
+    return updateResponse.json();
+};
+
 
 
 
