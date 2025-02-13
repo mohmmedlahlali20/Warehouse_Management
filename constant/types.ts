@@ -20,6 +20,11 @@ export interface Products {
 
 }
 
+export interface Localisation {
+    city: string;
+    latitude: number;
+    longitude: number;
+}
 
 
 export interface Warehouseman {
@@ -31,11 +36,6 @@ export interface Warehouseman {
     warehouseId: string;
 }
 
-export interface Localisation {
-    city: string;
-    latitude: number;
-    longitude: number;
-}
 
 
 export interface Statistics {
