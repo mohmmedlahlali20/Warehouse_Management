@@ -12,6 +12,10 @@ export default function Home() {
   const router = useRouter();
   const { isLoading, error, statistique } = useAppSelector((state) => state.statistique);
 
+  console.log('====================================');
+  console.log(statistique);
+  console.log('====================================');
+
   useEffect(() => {
     const fetchStatistique = async () => {
       await dispatch(Statistique());
