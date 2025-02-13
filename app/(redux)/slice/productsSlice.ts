@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Products } from "~/constant/types";
-import { checkIfProductsExistByBarcode, getAllProduct, getProductsById, UpdateQuantity } from "../(services)/api/products";
+import { addProduct, checkIfProductsExistByBarcode, getAllProduct, getProductsById, UpdateQuantity } from "../(services)/api/products";
 
 const initialState: {
     products: Products[];
@@ -15,8 +15,6 @@ const initialState: {
     error: null,
     productExists: false,
 };
-
-
 export const getProducts = createAsyncThunk(
     "products/getAll",
     async (_, { rejectWithValue }) => {
@@ -27,7 +25,6 @@ export const getProducts = createAsyncThunk(
         }
     }
 );
-
 export const getProductById = createAsyncThunk(
     "products/details",
     async (productId: string, { rejectWithValue }) => {
@@ -40,7 +37,6 @@ export const getProductById = createAsyncThunk(
         }
     }
 );
-
 export const checkIfProductsExist = createAsyncThunk(
     "products/checkIfProductsExist",
     async (barcode: number, { rejectWithValue }) => {
@@ -52,7 +48,6 @@ export const checkIfProductsExist = createAsyncThunk(
         }
     }
 );
-
 export const updateQuantityInStock = createAsyncThunk(
     'products/updateQuantity',
     async (
@@ -102,9 +97,16 @@ export const updateQuantityInStock = createAsyncThunk(
         }
     }
 );
+export const createNewProduct = createAsyncThunk("create Products",
+    async ({ ProductData }: { ProductData: Products }, { rejectWithValue }) => {
+        try {
+            return await addProduct(ProductData)
+        } catch (error) {
+            return rejectWithValue('Product or stocks not found');
+        }
 
-
-export const createNewProduct = createAsyncThunk()
+    }
+)
 
 
 
@@ -166,7 +168,20 @@ const productSlice = createSlice({
             .addCase(updateQuantityInStock.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string || 'An error occurred while updating stock';
+            })
+            .addCase(createNewProduct.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(createNewProduct.fulfilled, (state, action: PayloadAction<Products>) => {
+                state.isLoading = false;
+                state.products.push(action.payload);
+            })
+            .addCase(createNewProduct.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string || 'Failed to create product';
             });
+            
 
     },
 });
