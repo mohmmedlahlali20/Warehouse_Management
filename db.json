@@ -89,7 +89,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 13,
+          "quantity": 14,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -98,7 +98,7 @@
         }
       ],
       "editedBy": {
-        "warehousemanId": 1234,
+        "warehousemanId": 0,
         "at": "2025-02-13"
       }
     },
@@ -115,7 +115,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 20,
+          "quantity": 21,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -124,7 +124,7 @@
         }
       ],
       "editedBy": {
-        "warehousemanId": 1234,
+        "warehousemanId": 0,
         "at": "2025-02-13"
       }
     },
@@ -185,7 +185,7 @@
         {
           "id": "1739451732897",
           "name": "503",
-          "quantity": 0,
+          "quantity": 13,
           "localisation": {
             "city": "Ouejda",
             "latitude": 0,
@@ -196,7 +196,11 @@
       "type": "accessoir",
       "supplier": "Fg",
       "barcode": "369666556585",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
+      "editedBy": {
+        "warehousemanId": 0,
+        "at": "2025-02-13"
+      }
     }
   ],
   "warehousemans": [
