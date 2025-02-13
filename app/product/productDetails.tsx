@@ -1,6 +1,6 @@
 
 import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from "react-native"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import MapView, { Marker } from "react-native-maps"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
@@ -14,8 +14,15 @@ export default function ProductDetails() {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  console.log(selectedProduct?.stocks[0].localisation.latitude);
-  
+  const [totalStock, setTotalStock] = useState(0);
+
+  useEffect(() => {
+    if (selectedProduct?.stocks) {
+      const stockSum = selectedProduct.stocks.reduce((total, stock) => total + stock.quantity, 0);
+      console.log("Stock calculé:", stockSum);
+      setTotalStock(stockSum);
+    }
+  }, [selectedProduct]);
 
 
   useEffect(() => {
@@ -24,6 +31,20 @@ export default function ProductDetails() {
     }
     selectProduct()
   }, [dispatch, productId])
+
+  const stockTextColor = totalStock > 10
+    ? "#16A34A"
+    : totalStock > 5
+      ? "#EAB308"
+      : "#DC2626";
+
+
+
+
+  console.log('====================================');
+  console.log(totalStock);
+  console.log('====================================');
+
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
@@ -56,11 +77,13 @@ export default function ProductDetails() {
           <Text className="text-xl text-indigo-600 font-semibold mb-4">${selectedProduct.price}</Text>
           <View className="flex-row items-center mb-4">
             <Feather name="box" size={20} color="#4B5563" />
-            <Text className="text-gray-600 ml-2">In Stock: {selectedProduct.stocks.reduce((total, stock) => total + stock.quantity, 0)}</Text>
+            <Text style={{ color: stockTextColor, marginLeft: 8 }}>
+              In Stock: {totalStock}
+            </Text>
           </View>
           <View className="flex-row items-center mb-4">
             <Feather name="tag" size={20} color="#4B5563" />
-            <Text className="text-gray-600 ml-2">Category: {selectedProduct.type}</Text>
+            <Text className=" ml-2 ">Category: {selectedProduct.type}</Text>
           </View>
           <Text className="text-lg text-gray-700 mb-4">{selectedProduct.solde}</Text>
 
