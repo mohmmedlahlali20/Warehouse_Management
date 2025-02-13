@@ -42,10 +42,10 @@ const checkIfProductsExistByBarcode = async (barcode: number) => {
 
 };
 
- const addProduct = async (newProduct: Products) => {
+ const addProduct = async (ProductData: Products) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
         method: 'POST',
-        body: JSON.stringify(newProduct),
+        body: JSON.stringify(ProductData),
         headers: {
             'Content-Type': 'application/json',
         },
@@ -100,5 +100,6 @@ export {
     getAllProduct,
     getProductsById,
     checkIfProductsExistByBarcode,
-    UpdateQuantity
+    UpdateQuantity,
+    addProduct
 }

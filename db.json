@@ -91,7 +91,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 8,
+          "quantity": 7,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -103,6 +103,10 @@
         {
           "warehousemanId": 1444,
           "at": "2025-02-02"
+        },
+        {
+          "warehousemanId": 1234,
+          "at": "2025-02-13"
         },
         {
           "warehousemanId": 1234,
@@ -149,6 +153,72 @@
           "at": "2025-02-13"
         }
       ]
+    },
+    {
+      "id": "1236",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739451320476",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "578",
+      "barcode": "00989656555",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+    },
+    {
+      "id": "uD0JSHru8zOHuOcY_RgrZ",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739451665005",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "Uui",
+      "barcode": "42355182",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+    },
+    {
+      "id": "y0R8nikC000P8sek09AZ-",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739451732897",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "Fg",
+      "barcode": "369666556585",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
     }
   ],
   "warehousemans": [
