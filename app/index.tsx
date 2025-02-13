@@ -67,7 +67,7 @@ export default function Home() {
               <Text className="text-white font-semibold">List Products</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => router.push("/product/product")}
+              onPress={() => router.push("/product/addProducts")}
               className="bg-green-500 px-6 py-3 rounded-xl flex-row items-center shadow-md"
             >
               <Feather name="camera" size={20} color="#fff" className="mr-2" />
