@@ -19,17 +19,12 @@ const getAllProduct = async () => {
 
 
 const getProductsById = async (productId: string) => {
-console.log('=======sdfghjklui=============================');
-console.log(productId);
-console.log('====================================');
     const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`)
-
     if (!res.ok) {
         throw new Error("Failed to fetch products");
     }
     return await res.json()
 }
-
 const checkIfProductsExistByBarcode = async (barcode: number) => {
 
     const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${barcode}`);
@@ -111,10 +106,24 @@ const UpdateQuantity = async (
 
 
 
+const removeProductById = async (productId: string) => {
+    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await res.json();
+}
+
+
+
+
 export {
     getAllProduct,
     getProductsById,
     checkIfProductsExistByBarcode,
     UpdateQuantity,
-    addProduct
+    addProduct,
+    removeProductById
 }
