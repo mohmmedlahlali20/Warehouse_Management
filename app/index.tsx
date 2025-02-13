@@ -16,6 +16,7 @@ export default function Home() {
     const fetchStatistique = async () => {
       await dispatch(Statistique());
     };
+    
 
     fetchStatistique();
   }, [dispatch]);

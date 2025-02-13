@@ -2,12 +2,10 @@ import { View, Text, StatusBar, Image, ActivityIndicator, ScrollView, Pressable,
 import { useEffect, useState } from "react";
 import { Stack, useRouter } from "expo-router";
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch";
-import { getProducts } from "../(redux)/slice/productsSlice";
+import { deleteProductById, getProducts } from "../(redux)/slice/productsSlice";
 import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Menu, Divider, Provider } from "react-native-paper";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-
-
 
 export default function Product() {
   const dispatch = useAppDispatch();
@@ -16,11 +14,13 @@ export default function Product() {
   const [visibleMenu, setVisibleMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      await dispatch(getProducts());
-    };
-    fetchProducts();
+    dispatch(getProducts());
   }, [dispatch]);
+
+  const handleDeleteProduct = async (productId: string) => {
+    await dispatch(deleteProductById(productId));
+    dispatch(getProducts());  
+  };
 
   const handleProductPress = (productId: string) => {
     console.log("productId:", productId);
@@ -82,18 +82,17 @@ export default function Product() {
                     </TouchableOpacity>
                   }
                 >
-                  <Menu.Item onPress={
-                    () =>
-                      console.log(`Modifier ${product.id}`)
-                  }
+                  <Menu.Item
+                    onPress={() => handleDeleteProduct(product.id)}
                     title="Remove"
                     leadingIcon={() => <MaterialCommunityIcons name="delete-empty" size={24} color="black" />}
                   />
                   <Divider />
                   <Menu.Item
                     leadingIcon={() => <FontAwesome5 name="file-export" size={22} color="black" />}
-                    onPress={() => console.log(`Supprimer ${product.id}`)}
-                    title="Export" />
+                    onPress={() => console.log(`Exporter ${product.id}`)}
+                    title="Export"
+                  />
                 </Menu>
               </Pressable>
             ))
