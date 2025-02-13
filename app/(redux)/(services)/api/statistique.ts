@@ -1,21 +1,16 @@
 
 
-
-
-const getStatistique = async () => {
-    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/statistics`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (!res.ok) {
-        throw new Error("Failed to fetch statistique");
+ const getStatistics = async () => {
+    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/statistics`,
+        {method:"GET",
+        headers:{
+            "Content-Type":"application/json",
+        }
     }
-    return await res.json();
+    );
+    const data = await response.json();
+    return data;
 }
-
-
 export {
-    getStatistique
+    getStatistics
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Statistics } from "~/constant/types"
-import { getStatistique } from "../(services)/api/statistique";
+import { getStatistics } from "../(services)/api/statistique";
 
 
 const initialState: {
@@ -20,16 +20,13 @@ const initialState: {
 };
 
 
-export const Statistique = createAsyncThunk("getStatistique",
-    async (_, {rejectWithValue}) => {
-        try {
-            return await getStatistique()
-            
-        } catch (err) {
-            return rejectWithValue('cannot get statistique')
-        }
+export const Statistique = createAsyncThunk(
+    "statistics/loadStatistics",
+    async ()=>{
+        const response = await getStatistics();
+        return response;
     }
-)
+);
 
 
 const statistiqueSlice = createSlice({
@@ -38,18 +35,16 @@ const statistiqueSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(Statistique.pending, (state) => {
-            state.isLoading = true;
-            state.error = null
+        .addCase(Statistique.pending, (state)=>{
+            state.isLoading=true;
         })
-        .addCase(Statistique.fulfilled, (state, action: PayloadAction<Statistics>)=> {
-            state.statistique = action.payload
-            state.isLoading = false;
-            state.error = null
+        .addCase(Statistique.fulfilled, (state, action)=>{ 
+            state.statistique=action.payload;
+            state.isLoading=false;
         })
-        .addCase(Statistique.rejected , (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload as string
+        .addCase(Statistique.rejected, (state)=>{
+            state.isLoading=false;
+            state.error="Error";
         })
     }
 })

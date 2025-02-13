@@ -115,7 +115,7 @@
         {
           "id": "1999",
           "name": "Gueliz B2",
-          "quantity": 21,
+          "quantity": 22,
           "localisation": {
             "city": "Marrakesh",
             "latitude": 31.628685,
@@ -137,7 +137,7 @@
         {
           "id": "1739451320476",
           "name": "503",
-          "quantity": 1,
+          "quantity": 4,
           "localisation": {
             "city": "Ouejda",
             "latitude": 0,
@@ -150,7 +150,7 @@
       "barcode": "00989656555",
       "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
       "editedBy": {
-        "warehousemanId": 1234,
+        "warehousemanId": 0,
         "at": "2025-02-13"
       }
     },
