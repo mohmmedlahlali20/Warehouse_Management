@@ -122,17 +122,14 @@ const productSlice = createSlice({
                 state.error = action.payload as string;
             })
             .addCase(updateQuantityInStock.pending, (state) => {
-                console.log("🔄 Dispatch started: Updating stock...");
                 state.isLoading = false;
                 state.error = null;
             })
             .addCase(updateQuantityInStock.fulfilled, (state, action) => {
-                console.log("✅ Action fulfilled! Received product:", action.payload);
                 state.isLoading = false;
                 state.selectedProduct = { ...action.payload };
             })
             .addCase(updateQuantityInStock.rejected, (state, action) => {
-                console.log("❌ Action rejected! Error:", action.payload);
                 state.isLoading = false;
                 state.error = action.payload as string || "An error occurred";
             })
