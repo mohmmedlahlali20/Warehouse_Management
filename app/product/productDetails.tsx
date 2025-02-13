@@ -1,66 +1,63 @@
-
-import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from "react-native"
-import { useEffect, useState } from "react"
-import MapView, { Marker } from "react-native-maps"
-import { Stack, useLocalSearchParams, useRouter } from "expo-router"
-import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
-import { getProductById, updateQuantityInStock } from "../(redux)/slice/productsSlice"
-import { Feather } from "@expo/vector-icons"
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+import MapView, { Marker } from "react-native-maps";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch";
+import { getProductById, updateQuantityInStock } from "../(redux)/slice/productsSlice";
+import { Feather } from "@expo/vector-icons";
 
 export default function ProductDetails() {
-  const { productId } = useLocalSearchParams()
-  const { isLoading, error, selectedProduct } = useAppSelector((state) => state.Products)
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  const { productId } = useLocalSearchParams();
+  const { isLoading, error, selectedProduct } = useAppSelector((state) => state.Products);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [totalStock, setTotalStock] = useState(0);
 
-
   const handleIncrement = () => {
-    dispatch(updateQuantityInStock({
-      type: 'add',
-      productId: selectedProduct?.id as string,
-      stokId: selectedProduct?.stocks[0].id as string,
-      warehousemanId: 1234,
-    }));
-  };
-  const handleDecrement = () => {
-    dispatch(updateQuantityInStock({
-      type: 'remove',
-      productId: selectedProduct?.id as string,
-      stokId: selectedProduct?.stocks[0].id as string,
-      warehousemanId: 1234,
-    }));
-  };
-  useEffect(() => {
-    if (selectedProduct?.stocks) {
-      const stockSum = selectedProduct.stocks.reduce((total, stock) => total + stock.quantity, 0);
-      console.log("Stock calculé:", stockSum);
-      setTotalStock(stockSum);
+    if (selectedProduct && selectedProduct.stocks[0]) {
+      dispatch(
+        updateQuantityInStock({
+          type: "add",
+          productId: selectedProduct.id,
+          stokId: selectedProduct.stocks[0].id,
+          warehousemanId: 1234, 
+        })
+      );
+
     }
-  }, [selectedProduct]);
+  };
+  
+  const handleDecrement = () => {
+    if (selectedProduct && selectedProduct.stocks[0]) {
+      dispatch(
+        updateQuantityInStock({
+          type: "remove",
+          productId: selectedProduct.id,
+          stokId: selectedProduct.stocks[0].id,
+          warehousemanId: 1234,
+        })
+      );
+    }
+  };
 
-
+  useEffect(() => {
+    if (selectedProduct) {
+       const stockSum = selectedProduct.stocks.reduce((total, stock) => total + stock.quantity, 0);
+       setTotalStock(stockSum);
+    }
+ }, [selectedProduct]);
+ 
   useEffect(() => {
     const selectProduct = async () => {
-      await dispatch(getProductById(productId as string))
-    }
-    selectProduct()
-  }, [dispatch, productId])
+      
+        await dispatch(getProductById(productId as string));
+     
+    };
+    selectProduct();
+  }, [dispatch, productId]);
+  
 
-  const stockTextColor = totalStock > 10
-    ? "#16A34A"
-    : totalStock > 5
-      ? "#EAB308"
-      : "#DC2626";
-
-
-
-
-  console.log('====================================');
-  console.log(totalStock);
-  console.log('====================================');
-
+  const stockTextColor = totalStock > 10 ? "#16A34A" : totalStock > 5 ? "#EAB308" : "#DC2626";
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
@@ -77,10 +74,6 @@ export default function ProductDetails() {
       {isLoading ? (
         <View className="flex-1 items-center justify-center p-4">
           <Text className="text-lg text-gray-600">Loading...</Text>
-        </View>
-      ) : error ? (
-        <View className="flex-1 items-center justify-center p-4">
-          <Text className="text-lg text-red-500">Error: {error}</Text>
         </View>
       ) : selectedProduct ? (
         <View className="p-4">
@@ -127,7 +120,6 @@ export default function ProductDetails() {
             </View>
           </View>
 
-
           <View className="flex-1 justify-center px-6 py-8 bg-white m-3 rounded-lg shadow-md">
             <Text className="text-2xl text-center mb-4 font-semibold">Localisation of Warehouses</Text>
             <MapView
@@ -155,7 +147,6 @@ export default function ProductDetails() {
                 <Text className="text-center text-red-500">No warehouse locations available</Text>
               )}
             </MapView>
-
           </View>
         </View>
       ) : (
@@ -164,5 +155,5 @@ export default function ProductDetails() {
         </View>
       )}
     </ScrollView>
-  )
+  );
 }
