@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, Image, ActivityIndicator, ScrollView, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, StatusBar, Image, ActivityIndicator, ScrollView, Pressable, TouchableOpacity, TextInput } from "react-native";
 import { useEffect, useState } from "react";
 import { Stack, useRouter } from "expo-router";
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch";
@@ -16,7 +16,7 @@ export default function Product() {
   const router = useRouter();
   const { isLoading, error, products } = useAppSelector((state) => state.Products);
   const [visibleMenu, setVisibleMenu] = useState<string | null>(null);
-
+  const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -24,15 +24,6 @@ export default function Product() {
   const handleDeleteProduct = async (productId: string) => {
     await dispatch(deleteProductById(productId));
     dispatch(getProducts());
-  };
-
-  const handleProductPress = (productId: string) => {
-    console.log("productId:", productId);
-    router.push(`/product/productDetails?productId=${productId}`);
-  };
-
-  const addProducts = () => {
-    router.push('/product/addProducts');
   };
 
   const toggleMenu = (productId: string) => {
@@ -139,7 +130,9 @@ export default function Product() {
     }
   };
 
-
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Provider>
@@ -155,6 +148,16 @@ export default function Product() {
           }}
         />
         <ScrollView className="flex-1 px-4 py-6">
+
+        <View>
+            <Text className="text-3xl text-blue-500 font-bold text-center m-3">All Products</Text>
+            <TextInput
+              className="h-12 border border-gray-300 rounded-md px-10 text-base mb-4"
+              placeholder="Search products"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
           {isLoading ? (
             <View className="flex-1 justify-center items-center">
               <ActivityIndicator size="large" color="#4F46E5" />
@@ -164,11 +167,11 @@ export default function Product() {
               <Text className="text-red-500 text-lg">{error}</Text>
             </View>
           ) : (
-            products.map((product) => (
+            filteredProducts.map((product) => (
               <Pressable
                 key={product.id}
                 className="bg-white rounded-lg shadow-md mb-4 p-4 flex-row items-center"
-                onPress={() => handleProductPress(product.id)}
+                onPress={() => {  router.push(`/product/productDetails?productId=${product.id}`);}}
               >
                 <Image
                   source={{ uri: product.image }}
@@ -202,13 +205,13 @@ export default function Product() {
                 </Menu>
 
               </Pressable>
-            ))
-          )}
+            )) 
+          ) }
         </ScrollView>
 
         <View className="container mx-auto px-6 py-6">
           <TouchableOpacity
-            onPress={addProducts}
+            onPress={() => {router.push('/product/addProducts');}}
             className="bg-red-500 px-6 py-3 rounded-xl flex-row items-center justify-center"
           >
             <Feather name="plus" size={20} color="#fff" style={{ marginRight: 8 }} />
