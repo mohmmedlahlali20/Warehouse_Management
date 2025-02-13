@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import MapView, { Marker } from "react-native-maps"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch"
-import { getProductById } from "../(redux)/slice/productsSlice"
+import { getProductById, updateQuantityInStock } from "../(redux)/slice/productsSlice"
 import { Feather } from "@expo/vector-icons"
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -13,9 +13,25 @@ export default function ProductDetails() {
   const { isLoading, error, selectedProduct } = useAppSelector((state) => state.Products)
   const dispatch = useAppDispatch()
   const router = useRouter()
-
   const [totalStock, setTotalStock] = useState(0);
 
+
+  const handleIncrement = () => {
+    dispatch(updateQuantityInStock({
+      type: 'add',
+      productId: selectedProduct?.id as string,
+      stokId: selectedProduct?.stocks[0].id as string,
+      warehousemanId: 1234,
+    }));
+  };
+  const handleDecrement = () => {
+    dispatch(updateQuantityInStock({
+      type: 'remove',
+      productId: selectedProduct?.id as string,
+      stokId: selectedProduct?.stocks[0].id as string,
+      warehousemanId: 1234,
+    }));
+  };
   useEffect(() => {
     if (selectedProduct?.stocks) {
       const stockSum = selectedProduct.stocks.reduce((total, stock) => total + stock.quantity, 0);
@@ -87,28 +103,30 @@ export default function ProductDetails() {
           </View>
           <Text className="text-lg text-gray-700 mb-4">{selectedProduct.solde}</Text>
 
-          <View className="bg-gray-400 flex-1 justify-center   m-3 rounded-lg shadow-md">
-            <View >
-              <Text className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</Text>
-              <View className="flex-row justify-between gap-4 m-3 ">
-                <TouchableOpacity
-                  onPress={() => router.push("/product/product")}
-                  className="bg-blue-500 px-6 py-3 rounded-xl flex-row items-center shadow-md"
-                >
-                  <Feather name="list" size={20} color="#fff" className="mr-2" />
-                  <Text className="text-white font-semibold">List Products</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => router.push("/product/product")}
-                  className="bg-green-500 px-6 py-3 rounded-xl flex-row items-center shadow-md"
-                >
-                  <Feather name="camera" size={20} color="#fff" className="mr-2" />
-                  <Text className="text-white font-semibold">Scan Barcode</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+          <View className="bg-gray-300 flex-1 justify-center p-4 m-3 rounded-lg shadow-md">
+            <Text className="text-2xl font-bold text-gray-800 text-center mb-4">
+              Quantity in stock
+            </Text>
 
+            <View className="flex-row justify-between gap-4">
+              <TouchableOpacity
+                onPress={handleIncrement}
+                className="bg-blue-500 px-6 py-3 rounded-xl flex-row items-center justify-center shadow-md flex-1"
+              >
+                <Feather name="plus" size={20} color="#fff" />
+                <Text className="text-white font-semibold ml-2">Increment</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={handleDecrement}
+                className="bg-red-500 px-6 py-3 rounded-xl flex-row items-center justify-center shadow-md flex-1"
+              >
+                <Feather name="minus" size={20} color="#fff" />
+                <Text className="text-white font-semibold ml-2">Decrement</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
 
           <View className="flex-1 justify-center px-6 py-8 bg-white m-3 rounded-lg shadow-md">
             <Text className="text-2xl text-center mb-4 font-semibold">Localisation of Warehouses</Text>
