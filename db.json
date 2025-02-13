@@ -90,6 +90,34 @@
           "at": "2025-02-02"
         }
       ]
+    },
+    {
+      "id": "1554",
+      "name": "moon night",
+      "type": "moon",
+      "barcode": "125896333",
+      "solde": "855",
+      "price": "4258",
+      "supplier": 1999,
+      "image": "https://mediazone.ma/uploads/images/products/15216/15216-00QityxR.webp",
+      "stocks": [
+        {
+          "id": "1999",
+          "name": "Gueliz B2",
+          "quantity": 6,
+          "localisation": {
+            "city": "Marrakesh",
+            "latitude": 31.628685,
+            "longitude": -7.992110
+          }
+        }
+      ],
+      "editedBy": [
+        {
+          "warehousemanId": 1333,
+          "at": "2025-02-02"
+        }
+      ]
     }
   ],
   "warehousemans": [
@@ -137,5 +165,27 @@
     "totalStockValue": 70,
     "mostAddedProducts": [],
     "mostRemovedProducts": []
-  }
+  },
+  "stocks": [
+    {
+      "id": "1999",
+      "name": "Gueliz B2",
+      "quantity": 21,
+      "localisation": {
+        "city": "Marrakesh",
+        "latitude": 31.628674,
+        "longitude": -7.992047
+      }
+    },
+    {
+      "id": "2991",
+      "name": "Lazari H2",
+      "quantity": 24,
+      "localisation": {
+        "city": "Oujda",
+        "latitude": 34.689404,
+        "longitude": -1.912823
+      }
+    }
+  ]
 }
