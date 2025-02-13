@@ -6,6 +6,10 @@ import { deleteProductById, getProducts } from "../(redux)/slice/productsSlice";
 import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Menu, Divider, Provider } from "react-native-paper";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Products } from "~/constant/types";
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
+
 
 export default function Product() {
   const dispatch = useAppDispatch();
@@ -19,7 +23,7 @@ export default function Product() {
 
   const handleDeleteProduct = async (productId: string) => {
     await dispatch(deleteProductById(productId));
-    dispatch(getProducts());  
+    dispatch(getProducts());
   };
 
   const handleProductPress = (productId: string) => {
@@ -34,6 +38,108 @@ export default function Product() {
   const toggleMenu = (productId: string) => {
     setVisibleMenu((prev) => (prev === productId ? null : productId));
   };
+
+  const handleExportProduct = async (product: Products) => {
+    try {
+      const htmlContent = `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f4f4f4;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                text-align: center;
+                background: #4F46E5;
+                color: white;
+                padding: 15px;
+                border-radius: 10px 10px 0 0;
+              }
+              .header h1 {
+                margin: 0;
+                font-size: 20px;
+              }
+              .product-image {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 20px auto;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              }
+              .info-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+              }
+              .info-table th, .info-table td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+              }
+              .info-table th {
+                background: #f9f9f9;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Détails du Produit</h1>
+              </div>
+              <img src="${product.image}" alt="Product Image" class="product-image" />
+              <table class="info-table">
+                <tr>
+                  <th>Nom</th>
+                  <td>${product.name}</td>
+                </tr>
+                <tr>
+                  <th>Type</th>
+                  <td>${product.type}</td>
+                </tr>
+                <tr>
+                  <th>Prix</th>
+                  <td>${product.price} $</td>
+                </tr>
+                <tr>
+                  <th>Solde</th>
+                  <td>${product.solde} $</td>
+                </tr>
+                <tr>
+                  <th>ID</th>
+                  <td>${product.id}</td>
+                </tr>
+                <tr>
+                  <th>quantity</th>
+                  <td>${product?.stocks[0].quantity}</td>
+                </tr>
+              </table>
+            </div>
+          </body>
+        </html>
+      `;
+
+      const { uri } = await Print.printToFileAsync({ html: htmlContent });
+      console.log("PDF généré :", uri);
+
+      await Sharing.shareAsync(uri);
+    } catch (error) {
+      console.error("Erreur lors de l'exportation du produit :", error);
+    }
+  };
+
+
 
   return (
     <Provider>
@@ -89,11 +195,12 @@ export default function Product() {
                   />
                   <Divider />
                   <Menu.Item
-                    leadingIcon={() => <FontAwesome5 name="file-export" size={22} color="black" />}
-                    onPress={() => console.log(`Exporter ${product.id}`)}
                     title="Export"
+                    onPress={() => handleExportProduct(product)}
+                    leadingIcon={() => <FontAwesome5 name="file-export" size={22} color="black" />}
                   />
                 </Menu>
+
               </Pressable>
             ))
           )}
