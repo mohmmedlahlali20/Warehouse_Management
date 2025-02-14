@@ -24,34 +24,34 @@ export default function ProductScanner() {
   const router = useRouter();
   const productExists = useAppSelector((state) => state.Products.productExists);
   const { products } = useAppSelector((state) => state.Products);
-  
+
   const [isCameraVisible, setCameraVisible] = useState(false);
   const [manualBarcode, setManualBarcode] = useState("");
   const [selectedStock, setSelectedStock] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const [name, setName] = useState("Console Sony PlayStation® 5 - PS5 Édition Standard");
   const [price, setPrice] = useState("799");
   const [solde, setSolde] = useState("798");
   const [stock, setStock] = useState("503");
   const [supplier, setSupplier] = useState("");
   const [image, setImage] = useState("https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp");
-  const [type , setType] = useState("accessoir")
+  const [type, setType] = useState("accessoir")
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  const uniqueStocks = useMemo(() => {
-    const stocksMap = new Map();
-    products.forEach((product) => {
-      product.stocks.forEach((stock) => {
-        if (!stocksMap.has(stock.id)) {
-          stocksMap.set(stock.id, stock);
-        }
-      });
+  const stocksMap = new Map();
+  products.forEach((product) => {
+    product.stocks.forEach((stock) => {
+      if (!stocksMap.has(stock.id)) {
+        stocksMap.set(stock.id, stock);
+      }
     });
-    return Array.from(stocksMap.values());
-  }, [products]);
+  });
+
+  const uniqueStocks = Array.from(stocksMap.values());
+
 
   useEffect(() => {
     if (scannedData) {
@@ -81,31 +81,31 @@ export default function ProductScanner() {
       setErrorMessage("Veuillez remplir tous les champs !");
       return;
     }
-  
+
     const ProductData = {
       id: nanoid(),
       name,
-      solde: Number(solde), 
+      solde: Number(solde),
       price: Number(price),
       stocks: [
         {
-          id: Date.now().toString(), 
-          name: stock, 
+          id: Date.now().toString(),
+          name: stock,
           quantity: 0,
           localisation: {
-            city: "Ouejda",  
-            latitude: 0.0,       
-            longitude: 0.0     
+            city: "Ouejda",
+            latitude: 0.0,
+            longitude: 0.0
           },
         }
       ],
       type,
       supplier,
-      barcode: String(manualBarcode),  
+      barcode: String(manualBarcode),
       image,
     };
-    
-  
+
+
     try {
       await dispatch(createNewProduct({ ProductData }));
       console.log("Produit ajouté :", ProductData);
@@ -116,7 +116,7 @@ export default function ProductScanner() {
       setErrorMessage("Une erreur est survenue lors de l'ajout du produit.");
     }
   };
-  
+
 
   if (!permission) return <View />;
 

@@ -43,41 +43,6 @@
       ]
     },
     {
-      "id": "2",
-      "name": "Clavier Mécanique Logitech",
-      "type": "Accessoires",
-      "barcode": "9876543210987",
-      "price": 100,
-      "supplier": "Logitech",
-      "image": "https://in-media.apjonlinecdn.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/8/a/8aa01aa.png",
-      "stocks": [
-        {
-          "id": 1999,
-          "name": "Gueliz B2",
-          "quantity": 22,
-          "localisation": {
-            "city": "Marrakesh",
-            "latitude": 31.628674,
-            "longitude": -7.992047
-          }
-        },
-        {
-          "id": 2991,
-          "name": "Lazari H2",
-          "quantity": 5,
-          "localisation": {
-            "city": "Oujda",
-            "latitude": 34.689404,
-            "longitude": -1.912823
-          }
-        }
-      ],
-      "editedBy": {
-        "warehousemanId": 0,
-        "at": "2025-02-14"
-      }
-    },
-    {
       "id": "3",
       "name": "Pc Gamer Omen By HP",
       "type": "Informatique",
@@ -104,14 +69,14 @@
     },
     {
       "id": "yzO5MILUI5MdZvDB0B1EU",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "name": "Station de travail mobile Dell Precision 5570 (i7-12800H/32Go/512Go SSD/4K/Tactile/RTX™ A2000 8Go)",
       "solde": 798,
       "price": 799,
       "stocks": [
         {
           "id": "1739521032667",
           "name": "503",
-          "quantity": 0,
+          "quantity": 854,
           "localisation": {
             "city": "Ouejda",
             "latitude": 0,
@@ -119,10 +84,14 @@
           }
         }
       ],
-      "type": "accessoir",
+      "type": "Informatique",
       "supplier": "89",
       "barcode": "266888453",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+      "image": "https://mediazone.ma/uploads/images/products/13831/13831-5ulTZqOk.webp",
+      "editedBy": {
+        "warehousemanId": 0,
+        "at": "2025-02-14"
+      }
     },
     {
       "id": "IJVWnvp8yX60ISu_uwXf-",
@@ -192,27 +161,5 @@
     "totalStockValue": 70,
     "mostAddedProducts": [],
     "mostRemovedProducts": []
-  },
-  "stocks": [
-    {
-      "id": "1999",
-      "name": "Gueliz B2",
-      "quantity": 21,
-      "localisation": {
-        "city": "Marrakesh",
-        "latitude": 31.628674,
-        "longitude": -7.992047
-      }
-    },
-    {
-      "id": "2991",
-      "name": "Lazari H2",
-      "quantity": 24,
-      "localisation": {
-        "city": "Oujda",
-        "latitude": 34.689404,
-        "longitude": -1.912823
-      }
-    }
-  ]
+  }
 }

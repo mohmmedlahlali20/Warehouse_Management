@@ -94,8 +94,14 @@ export default function ProductDetails() {
             <Feather name="tag" size={20} color="#4B5563" />
             <Text className=" ml-2 ">Category: {selectedProduct.type}</Text>
           </View>
-          <Text className="text-lg text-gray-700 mb-4">{selectedProduct.solde}</Text>
-
+          <View className="flex-row items-center mb-4">
+            <Feather name="dollar-sign" size={20} color="#4B5563" />
+            <Text className=" ml-2 ">Prix :{selectedProduct.price}</Text>
+          </View>
+          <View className="flex-row items-center mb-4">
+            <Feather name="tag" size={20} color="#4B5563" />
+            <Text className=" ml-2 ">Solde :{selectedProduct.solde}</Text>
+          </View>
           <View className="bg-gray-300 flex-1 justify-center p-4 m-3 rounded-lg shadow-md">
             <Text className="text-2xl font-bold text-gray-800 text-center mb-4">
               Quantity in stock
