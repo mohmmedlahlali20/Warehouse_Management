@@ -29,14 +29,15 @@ export default function ProductScanner() {
   const [manualBarcode, setManualBarcode] = useState("");
   const [selectedStock, setSelectedStock] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  
   const [name, setName] = useState("Console Sony PlayStation® 5 - PS5 Édition Standard");
   const [price, setPrice] = useState("799");
   const [solde, setSolde] = useState("798");
   const [stock, setStock] = useState("503");
   const [supplier, setSupplier] = useState("");
   const [image, setImage] = useState("https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp");
-  const [type, setType] = useState("accessoir")
+  const [type , setType] = useState("accessoir");
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -52,21 +53,12 @@ export default function ProductScanner() {
 
   const uniqueStocks = Array.from(stocksMap.values());
 
-
   useEffect(() => {
     if (scannedData) {
       setManualBarcode(scannedData);
-      dispatch(checkIfProductsExist(Number(scannedData)));
+      dispatch(checkIfProductsExist(scannedData));
     }
   }, [scannedData]);
-
-  useEffect(() => {
-    if (manualBarcode.trim().length > 0) {
-      dispatch(checkIfProductsExist(Number(manualBarcode)));
-    } else {
-      setErrorMessage("");
-    }
-  }, [manualBarcode]);
 
   useEffect(() => {
     if (productExists && scannedData) {
@@ -78,46 +70,49 @@ export default function ProductScanner() {
 
   const addProducts = async () => {
     if (!name || !price || !stock || !supplier || !manualBarcode) {
-      setErrorMessage("Veuillez remplir tous les champs !");
-      return;
+        setErrorMessage("Veuillez remplir tous les champs !");
+        return;
+    }
+
+    if (productExists) {
+        router.push(`/product/productDetails?products=${products}`);
+        return;
     }
 
     const ProductData = {
-      id: nanoid(),
-      name,
-      solde: Number(solde),
-      price: Number(price),
-      stocks: [
-        {
-          id: Date.now().toString(),
-          name: stock,
-          quantity: 0,
-          localisation: {
-            city: "Ouejda",
-            latitude: 0.0,
-            longitude: 0.0
-          },
-        }
-      ],
-      type,
-      supplier,
-      barcode: String(manualBarcode),
-      image,
+        id: nanoid(),
+        name,
+        solde: Number(solde),
+        price: Number(price),
+        stocks: [
+            {
+                id: Date.now().toString(),
+                name: stock,
+                quantity: 0,
+                localisation: {
+                    city: "Ouejda",
+                    latitude: 0.0,
+                    longitude: 0.0
+                },
+            }
+        ],
+        type,
+        supplier,
+        barcode: String(manualBarcode),
+        image,
     };
 
-
     try {
-      await dispatch(createNewProduct({ ProductData }));
-      console.log("Produit ajouté :", ProductData);
-      router.push('/product/product')
-      setErrorMessage("");
+        await dispatch(createNewProduct({ ProductData }));
+        console.log("Produit ajouté :", ProductData);
+        router.push('/product/product');
+        setErrorMessage("");
     } catch (error) {
-      console.error("Erreur lors de l'ajout du produit :", error);
-      setErrorMessage("Une erreur est survenue lors de l'ajout du produit.");
+        console.error("Erreur lors de l'ajout du produit :", error);
+        setErrorMessage("Une erreur est survenue lors de l'ajout du produit.");
     }
-  };
-
-
+};
+  
   if (!permission) return <View />;
 
   if (!permission.granted) {

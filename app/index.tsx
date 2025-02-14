@@ -12,11 +12,14 @@ export default function Home() {
   const router = useRouter();
   const { isLoading, error, statistique } = useAppSelector((state) => state.statistique);
 
+
+
+
   useEffect(() => {
     const fetchStatistique = async () => {
       await dispatch(Statistique());
     };
-    
+
 
     fetchStatistique();
   }, [dispatch]);
@@ -68,12 +71,13 @@ export default function Home() {
               <Text className="text-white font-semibold">List Products</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => router.push("/product/addProducts")}
+              onPress={() => router.push('/ScanScreen')}
               className="bg-green-500 px-6 py-4 rounded-xl flex-row items-center justify-center shadow-lg w-[48%]"
             >
               <Feather name="camera" size={20} color="#fff" className="mr-2" />
               <Text className="text-white font-semibold">Scan Barcode</Text>
             </TouchableOpacity>
+
           </View>
         </View>
 

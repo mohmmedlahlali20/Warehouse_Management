@@ -25,19 +25,6 @@ const getProductsById = async (productId: string) => {
     }
     return await res.json()
 }
-const checkIfProductsExistByBarcode = async (barcode: number) => {
-
-    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${barcode}`);
-
-    if (!res.ok) {
-        throw new Error(`Error: ${res.status} - ${res.statusText}`);
-    }
-
-    const product = await res.json();
-
-    return product ? true : false;
-
-};
 
 const addProduct = async (ProductData: Products) => {
     const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
@@ -89,8 +76,7 @@ const UpdateQuantity = async (
           },
         }),
       });
-      
-      console.log(" status:", updateResponse.status);
+    
       
       if (!updateResponse.ok) {
         console.error('Failed to update product, status code:', updateResponse.status);
@@ -116,7 +102,28 @@ const removeProductById = async (productId: string) => {
     return await res.json();
 }
 
-
+const checkIfProductsExistByBarcode = async (barcode: string) => {
+    try {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products?barcode=${barcode}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!res.ok) {
+        throw new Error("Failed to fetch product");
+      }
+  
+      const products = await res.json();
+      
+      return products[0];
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      return null;
+    }
+  };
+  
 
 
 export {
@@ -125,5 +132,5 @@ export {
     checkIfProductsExistByBarcode,
     UpdateQuantity,
     addProduct,
-    removeProductById
+    removeProductById,
 }

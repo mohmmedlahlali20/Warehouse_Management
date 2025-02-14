@@ -39,13 +39,11 @@ export const getProductById = createAsyncThunk(
 );
 export const checkIfProductsExist = createAsyncThunk(
     "products/checkIfProductsExist",
-    async (barcode: number, { rejectWithValue }) => {
-        try {
-            const exists = await checkIfProductsExistByBarcode(barcode);
-            return { barcode, exists };
-        } catch (err) {
-            return rejectWithValue("Failed to check product existence");
-        }
+    async (barcode: string, { rejectWithValue }) => {
+
+            const Product = await checkIfProductsExistByBarcode(barcode);
+            return Product ;
+       
     }
 );
 
@@ -118,18 +116,30 @@ const productSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload as string;
             })
+
+
+            
+
+
             .addCase(checkIfProductsExist.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             }) 
-            .addCase(checkIfProductsExist.fulfilled, (state, action: PayloadAction<{ barcode: number; exists: boolean }>) => {
+            .addCase(checkIfProductsExist.fulfilled, (state, action: PayloadAction<Products>) => {
                 state.isLoading = false;
-                state.productExists = action.payload.exists;
+                state.selectedProduct = {...action.payload};
+                console.log('fulfilled',action.payload);
+                
             })
             .addCase(checkIfProductsExist.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload as string;
             })
+
+
+
+
+
             .addCase(updateQuantityInStock.pending, (state) => {
                 state.isLoading = false;
                 state.error = null;
