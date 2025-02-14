@@ -70,8 +70,6 @@ export default function ProductScanner() {
 
   useEffect(() => {
     if (productExists && scannedData) {
-      router.push(`/product/productDetails`);
-    } else if (productExists && manualBarcode.trim().length > 0) {
       setErrorMessage("Ce code-barres existe déjà !");
     } else {
       setErrorMessage("");
@@ -156,6 +154,7 @@ export default function ProductScanner() {
       <View className="p-4">
         <Text className="text-3xl text-center text-red-500 m-5">Add New Product</Text>
 
+        {errorMessage ? <Text className="text-red-500 text-sm mb-4">{errorMessage}</Text> : null}
         <View className="relative">
           <TextInput
             className="h-12 border border-gray-300 rounded-md px-10 text-base mb-4"
@@ -169,7 +168,6 @@ export default function ProductScanner() {
           </TouchableOpacity>
         </View>
 
-        {errorMessage ? <Text className="text-red-500 text-sm mb-4">{errorMessage}</Text> : null}
 
         <TextInput className="h-12 border border-gray-300 rounded-md px-10 text-base mb-4" placeholder="Nom" value={name} onChangeText={setName} />
         <TextInput className="h-12 border border-gray-300 rounded-md px-10 text-base mb-4" placeholder="Prix" value={price} onChangeText={setPrice} keyboardType="numeric" />
