@@ -1,10 +1,11 @@
 import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useAppDispatch, useAppSelector } from "~/hooks/useAppDispatch";
 import { getProductById, updateQuantityInStock } from "../(redux)/slice/productsSlice";
 import { Feather } from "@expo/vector-icons";
+import WarehouseMap from "./WarehouseMap";
+import StockCounter from "./StockCounter";
 
 export default function ProductDetails() {
   const { productId } = useLocalSearchParams();
@@ -102,64 +103,14 @@ export default function ProductDetails() {
             <Feather name="tag" size={20} color="#4B5563" />
             <Text className=" ml-2 ">Solde :{selectedProduct.solde}</Text>
           </View>
-          <View className="bg-gray-300 flex-1 justify-center p-4 m-3 rounded-lg shadow-md">
-            <Text className="text-2xl font-bold text-gray-800 text-center mb-4">
-              Quantity in stock
-            </Text>
-
-            <View className="flex-row justify-between gap-4">
-              <TouchableOpacity
-                onPress={handleIncrement}
-                className="bg-blue-500 px-6 py-3 rounded-xl flex-row items-center justify-center shadow-md flex-1"
-              >
-                <Feather name="plus" size={20} color="#fff" />
-                <Text className="text-white font-semibold ml-2">Increment</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={handleDecrement}
-                className="bg-red-500 px-6 py-3 rounded-xl flex-row items-center justify-center shadow-md flex-1"
-              >
-                <Feather name="minus" size={20} color="#fff" />
-                <Text className="text-white font-semibold ml-2">Decrement</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View className="flex-1 justify-center px-6 py-8 bg-white m-3 rounded-lg shadow-md">
-            <Text className="text-2xl text-center mb-4 font-semibold">Localisation of Warehouses</Text>
-            <MapView
-              style={{ width: "100%", height: 300 }}
-              initialRegion={{
-                latitude: selectedProduct?.stocks[0].localisation.latitude,
-                longitude: selectedProduct?.stocks[0].localisation.longitude,
-                latitudeDelta: 5,
-                longitudeDelta: 5,
-              }}
-            >
-              {selectedProduct.stocks.length > 0 ? (
-                selectedProduct.stocks.map((stock) => (
-                  <Marker
-                    key={stock.id}
-                    coordinate={{
-                      latitude: stock.localisation.latitude,
-                      longitude: stock.localisation.longitude,
-                    }}
-                    title={stock.name}
-                    description={`Stock: ${stock.quantity}`}
-                  />
-                ))
-              ) : (
-                <Text className="text-center text-red-500">No warehouse locations available</Text>
-              )}
-            </MapView>
-          </View>
+            <StockCounter totalStock={totalStock} onIncrement={handleIncrement} onDecrement={handleDecrement} />
         </View>
       ) : (
         <View className="flex-1 items-center justify-center p-4">
           <Text className="text-lg text-gray-600">No product found</Text>
         </View>
       )}
+         {selectedProduct && <WarehouseMap />}
     </ScrollView>
   );
 }

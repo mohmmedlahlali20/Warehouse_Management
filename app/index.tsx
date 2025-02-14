@@ -12,14 +12,10 @@ export default function Home() {
   const router = useRouter();
   const { isLoading, error, statistique } = useAppSelector((state) => state.statistique);
 
-
-
-
   useEffect(() => {
     const fetchStatistique = async () => {
       await dispatch(Statistique());
     };
-
 
     fetchStatistique();
   }, [dispatch]);
@@ -38,23 +34,25 @@ export default function Home() {
   ];
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
+    <ScrollView className="flex-1 bg-gray-50">
       <Stack.Screen
         options={{
           headerShown: false,
         }}
       />
-      <Container className="px-4 py-6">
+      <Container className="px-4 py-8">
         <View className="mb-8">
           <Text className="text-4xl font-bold text-gray-800 mb-2 text-center">Welcome Back</Text>
           <Text className="text-lg text-gray-600 text-center">Here's your warehouse overview</Text>
         </View>
 
-        <View className="flex-row flex-wrap justify-between mb-6">
+        <View className="flex-row flex-wrap justify-between mb-8">
           {warehouseData.map((item, index) => (
-            <View key={index} className="w-[48%] bg-white rounded-lg p-4 mb-4 shadow-md">
-              <Feather name={item.icon} size={24} color="#4B5563" />
-              <Text className="text-lg font-semibold text-gray-800 mt-2">{item.value}</Text>
+            <View key={index} className="w-[48%] bg-white rounded-2xl p-5 mb-4 shadow-md">
+              <View className="bg-blue-100 w-12 h-12 rounded-full items-center justify-center mb-3">
+                <Feather name={item.icon} size={24} color="#3B82F6" />
+              </View>
+              <Text className="text-2xl font-bold text-gray-800 mb-1">{item.value}</Text>
               <Text className="text-sm text-gray-600">{item.title}</Text>
             </View>
           ))}
@@ -77,7 +75,6 @@ export default function Home() {
               <Feather name="camera" size={20} color="#fff" className="mr-2" />
               <Text className="text-white font-semibold">Scan Barcode</Text>
             </TouchableOpacity>
-
           </View>
         </View>
 
