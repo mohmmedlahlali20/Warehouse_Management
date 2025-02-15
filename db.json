@@ -31,16 +31,10 @@
           }
         }
       ],
-      "editedBy": [
-        {
-          "warehousemanId": 1333,
-          "at": "2025-02-02"
-        },
-        {
-          "warehousemanId": 1234,
-          "at": "2025-02-13"
-        }
-      ]
+      "editedBy": {
+        "warehousemanId": 0,
+        "at": "2025-02-14"
+      }
     },
     {
       "id": "3",
@@ -76,11 +70,11 @@
         {
           "id": "1739521032667",
           "name": "503",
-          "quantity": 854,
+          "quantity": 860,
           "localisation": {
             "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
+            "latitude": 34.0545,
+            "longitude": -6.7557
           }
         }
       ],
@@ -94,117 +88,29 @@
       }
     },
     {
-      "id": "pRBZFvG2_a7Fc7r7jWpeI",
+      "id": "2nAGQOh6r0wBmFw5PP1iJ",
       "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
       "solde": 798,
       "price": 799,
       "stocks": [
         {
-          "id": "1739540856707",
+          "id": "1739564810864",
           "name": "503",
-          "quantity": 0,
+          "quantity": 7,
           "localisation": {
             "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
+            "latitude": 35.6689,
+            "longitude": -5.3195
           }
         }
       ],
       "type": "accessoir",
-      "supplier": "900",
-      "barcode": "6111128000071",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
-    },
-    {
-      "id": "WppJbCtbzAhT4Fsp73zqV",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739542279458",
-          "name": "503",
-          "quantity": 0,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "Les 444",
-      "barcode": "187228000071",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
-    },
-    {
-      "id": "8l3O-G2dkxEd-2VUq5IcN",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739542294623",
-          "name": "503",
-          "quantity": 0,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "0099",
-      "barcode": "6111128000071",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
-    },
-    {
-      "id": "Y6ndVRZoJ02UXPxtxZeqJ",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739542312271",
-          "name": "503",
-          "quantity": 0,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "78",
-      "barcode": "6111128000071",
-      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
-    },
-    {
-      "id": "1RiuJ3wY0AYgosZViafeU",
-      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
-      "solde": 798,
-      "price": 799,
-      "stocks": [
-        {
-          "id": "1739542432850",
-          "name": "503",
-          "quantity": 9,
-          "localisation": {
-            "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
-          }
-        }
-      ],
-      "type": "accessoir",
-      "supplier": "99",
-      "barcode": "6111128000071",
+      "supplier": "90",
+      "barcode": "121752421568",
       "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
       "editedBy": {
         "warehousemanId": 0,
-        "at": "2025-02-14"
+        "at": "2025-02-15"
       }
     }
   ],
