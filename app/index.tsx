@@ -81,6 +81,7 @@ export default function Home() {
         <TouchableOpacity
           onPress={handleLogout}
           className="bg-red-500 px-6 py-4 rounded-xl flex-row items-center justify-center shadow-lg"
+          testID="logout-button"
         >
           <Feather name="log-out" size={20} color="#fff" className="mr-2" />
           <Text className="text-white font-semibold">Logout</Text>

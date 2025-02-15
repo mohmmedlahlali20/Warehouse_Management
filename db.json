@@ -1,42 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
-      "name": "Laptop HP Pavilion",
-      "type": "Informatique",
-      "barcode": "1234567890123",
-      "price": 1200,
-      "solde": 1100,
-      "supplier": "HP",
-      "image": "https://mediazone.ma/uploads/images/products/16412/landing-page/assets/images/swiper-1.png",
-      "stocks": [
-        {
-          "id": 1999,
-          "name": "Gueliz B2",
-          "quantity": 22,
-          "localisation": {
-            "city": "Marrakesh",
-            "latitude": 31.628674,
-            "longitude": -7.992047
-          }
-        },
-        {
-          "id": 2991,
-          "name": "Lazari H2",
-          "quantity": 24,
-          "localisation": {
-            "city": "Oujda",
-            "latitude": 34.689404,
-            "longitude": -1.912823
-          }
-        }
-      ],
-      "editedBy": {
-        "warehousemanId": 0,
-        "at": "2025-02-14"
-      }
-    },
-    {
       "id": "3",
       "name": "Pc Gamer Omen By HP",
       "type": "Informatique",
@@ -96,7 +60,7 @@
         {
           "id": "1739564810864",
           "name": "503",
-          "quantity": 7,
+          "quantity": 12,
           "localisation": {
             "city": "Ouejda",
             "latitude": 35.6689,
@@ -105,13 +69,101 @@
         }
       ],
       "type": "accessoir",
-      "supplier": "90",
-      "barcode": "121752421568",
+      "supplier": "900",
+      "barcode": "6111128000071",
       "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp",
       "editedBy": {
         "warehousemanId": 0,
         "at": "2025-02-15"
       }
+    },
+    {
+      "id": "WppJbCtbzAhT4Fsp73zqV",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739542279458",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "Les 444",
+      "barcode": "187228000071",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+    },
+    {
+      "id": "8l3O-G2dkxEd-2VUq5IcN",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739542294623",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "0099",
+      "barcode": "6111128000071",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+    },
+    {
+      "id": "Y6ndVRZoJ02UXPxtxZeqJ",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739542312271",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "accessoir",
+      "supplier": "78",
+      "barcode": "6111128000071",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
+    },
+    {
+      "id": "R8MP7SqEoh5B5INh1DoCh",
+      "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
+      "solde": 798,
+      "price": 799,
+      "stocks": [
+        {
+          "id": "1739625961476",
+          "name": "503",
+          "quantity": 0,
+          "localisation": {
+            "city": "Ouejda",
+            "latitude": 0,
+            "longitude": 0
+          }
+        }
+      ],
+      "type": "Information ",
+      "supplier": "Hp",
+      "barcode": "6111035001673",
+      "image": "https://mediazone.ma/uploads/images/products/11041/11041-MAIUdC2f.webp"
     }
   ],
   "warehousemans": [
