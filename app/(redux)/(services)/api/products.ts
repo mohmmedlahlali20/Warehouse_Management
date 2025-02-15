@@ -19,23 +19,37 @@ const getAllProduct = async () => {
 
 
 const getProductsById = async (productId: string) => {
-    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`)
-    if (!res.ok) {
-        throw new Error("Failed to fetch products");
-    }
-    return await res.json()
-}
-
-const addProduct = async (ProductData: Products) => {
-    const response = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
-        method: 'POST',
-        body: JSON.stringify(ProductData),
+    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products/${productId}`, {
+        method: "GET",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
     });
-    return await response.json();
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch product");
+    }
+
+    return await res.json();
 };
+
+
+const addProduct = async (product: { name: string; price: number }) => {
+    const res = await fetch(`${process.env.EXPO_PUBLIC_URL}/products`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to add product");
+    }
+
+    return await res.json();
+};
+;
 
 const UpdateQuantity = async (
     type: string,
@@ -119,7 +133,7 @@ const checkIfProductsExistByBarcode = async (barcode: string) => {
       
       return products[0];
     } catch (error) {
-      console.error("Error fetching product:", error);
+        
       return null;
     }
   };
