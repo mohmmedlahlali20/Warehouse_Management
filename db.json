@@ -34,11 +34,11 @@
         {
           "id": "1739521032667",
           "name": "503",
-          "quantity": 854,
+          "quantity": 860,
           "localisation": {
             "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
+            "latitude": 34.0545,
+            "longitude": -6.7557
           }
         }
       ],
@@ -52,19 +52,19 @@
       }
     },
     {
-      "id": "pRBZFvG2_a7Fc7r7jWpeI",
+      "id": "2nAGQOh6r0wBmFw5PP1iJ",
       "name": "Console Sony PlayStation® 5 - PS5 Édition Standard",
       "solde": 798,
       "price": 799,
       "stocks": [
         {
-          "id": "1739540856707",
+          "id": "1739564810864",
           "name": "503",
           "quantity": 12,
           "localisation": {
             "city": "Ouejda",
-            "latitude": 0,
-            "longitude": 0
+            "latitude": 35.6689,
+            "longitude": -5.3195
           }
         }
       ],
