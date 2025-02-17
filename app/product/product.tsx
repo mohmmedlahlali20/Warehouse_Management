@@ -185,7 +185,7 @@ export default function Product() {
               <Text className="text-red-500 text-lg">{error}</Text>
             </View>
           ) : (
-            filteredProducts.map((product) => (
+            filteredProducts.map((product: Products) => (
               <Pressable
                 key={product.id}
                 className="bg-white rounded-lg shadow-md mb-4 p-4 flex-row items-center"
